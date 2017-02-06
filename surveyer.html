@@ -104,6 +104,16 @@ PrefJSMan.prototype = {
 
 var gPrefJSMan = new PrefJSMan();
 window.addEventListener("load", function() {
+    function containsDataTransferType(aDataTransfer, item) {
+        if (aDataTransfer instanceof Array) {
+            return aDataTransfer.indexOf(item) != -1;
+        } else if (typeof(addEventListener.contains) == "function") {
+            return aDataTransfer.contains(item);
+        } else {
+            throw new Error("Unknown type");
+        }
+    }
+
     document.getElementById("capture_now").addEventListener("click", function() {
         var oText = document.getElementById("script_text");
         var oSideB = document.getElementById("capture_side_b");
@@ -194,7 +204,7 @@ window.addEventListener("load", function() {
     // drag and drop
     document.getElementById("script_text").addEventListener("dragover", function (event) {
         try {
-            if (event.dataTransfer.types.contains("Files")) {
+            if (containsDataTransferType(event.dataTransfer.types, "Files")) {
                 event.stopPropagation();
                 event.preventDefault();
                 event.dataTransfer.dropEffect = "copy";
@@ -205,7 +215,7 @@ window.addEventListener("load", function() {
     }, false);
     document.getElementById("script_text").addEventListener("drop", function (event) {
         try {
-            if (event.dataTransfer.types.contains("Files")) {
+            if (containsDataTransferType(event.dataTransfer.types, "Files")) {
                 event.stopPropagation();
                 event.preventDefault();
 
