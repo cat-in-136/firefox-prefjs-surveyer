@@ -25,9 +25,11 @@ PrefJS.prototype = {
         this.data[key] = val;
     },
     loadJS: function(script) {
-        var scriptFunc = new Function("pref", "user_pref", "sticky_pref", script);
+        var scriptFunc = new Function("pref", "user_pref", "sticky_pref", "sticky", "locked", script);
+        var stickySymbol = Symbol("sticky");
+        var lockedSymbol = Symbol("locked");
         var prefFunc = this.pref.bind(this);
-        scriptFunc.call(this, prefFunc, prefFunc, prefFunc);
+        scriptFunc.call(this, prefFunc, prefFunc, prefFunc, stickySymbol, lockedSymbol);
     },
     get: function(key) {
         return this.data[key];
