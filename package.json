@@ -2,7 +2,6 @@
   "name": "firefox-prefjs-surveyer",
   "version": "2.0.0",
   "description": "A quick-and-dirty tool of Firefox pref.js survey",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
