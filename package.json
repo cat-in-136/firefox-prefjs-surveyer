@@ -1,0 +1,25 @@
+{
+  "name": "firefox-prefjs-surveyer",
+  "version": "2.0.0",
+  "description": "A quick-and-dirty tool of Firefox pref.js survey",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cat-in-136/firefox-prefjs-surveyer.git"
+  },
+  "keywords": [
+    "firefox"
+  ],
+  "author": "@cat_in_136",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cat-in-136/firefox-prefjs-surveyer/issues"
+  },
+  "homepage": "https://github.com/cat-in-136/firefox-prefjs-surveyer#readme",
+  "dependencies": {
+    "foxr": "^0.9.0"
+  }
+}
