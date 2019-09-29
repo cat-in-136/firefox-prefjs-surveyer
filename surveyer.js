@@ -89,7 +89,20 @@ function escape_html (string) {
 
   let output = "";
 
-  process.stdout.write(`<table>\n<tbody>\n`);
+  process.stdout.write(`<!DOCTYPE html>\n<html>\n<head>
+    <style type="text/css"><!-- /* --><![CDATA[ /* */
+    #output table { border-collapse: collapse; font-size: x-small; overflow: auto; }
+    #output table td { border: 1px solid #ddd; padding: 1px; vertical-align: top; word-wrap: break-word; overflow-wrap: break-word; }
+    #output table tr:hover { background-color: #eee; }
+    #output table td.json, #output table td.uri, #output table td.dump { word-break: break-all; }
+    #output table td.undefined { color: #888; font-style: italic; }
+    #output table tr.sameval td:first-child { color: #444; }
+    #output table tr.newkey  td:first-child { text-decoration: underline;    }
+    #output table tr.oldkey  td:first-child { text-decoration: line-through; }
+    /* ]]><!-- */ --></style>\n`);
+  process.stdout.write(`</head>\n<body id="output">
+  <table>
+    <tbody>`);
   for (const c of compData) {
     const name = c.name;
     const valA = c.data[0];
@@ -99,20 +112,20 @@ function escape_html (string) {
     let valAInnerHTML = escape_html(String(valA));
     let valBInnerHTML = escape_html(String(valB));
 
-    let valAclassList = [];
-    let valBclassList = [];
-    let rowclassList = [];
+    const valAclassList = [];
+    const valBclassList = [];
+    const rowclassList = [];
 
     // undefined
     if (c.data[0] == undefined) valAclassList.push("undefined");
     if (c.data[1] == undefined) valBclassList.push("undefined");
     // json
     try {
-      var d = JSON.parse(c.data[0]);
+      const d = JSON.parse(c.data[0]);
       if (typeof(d) == "object") { valAclassList.push("json"); }
     } catch (ex) {}
     try {
-      var d = JSON.parse(c.data[1]);
+      const d = JSON.parse(c.data[1]);
       if (typeof(d) == "object") { valBclassList.push("json"); }
     } catch (ex) {}
     // uri
@@ -141,15 +154,17 @@ function escape_html (string) {
     const rowattr = (rowclassList.length > 0)? ` class="${rowclassList.join(' ')}"` : '';
 
     if (c.data[0] != c.data[1]) {
-      const row = `
-                   <tr${rowattr}>
-                     <td>${nameInnerHTML}</td>
-                     <td${valAattr}>${valAInnerHTML}</td>
-                     <td${valBattr}>${valBInnerHTML}</td>
-                   </tr>`;
-      process.stdout.write(`${row}\n`);
+      process.stdout.write(`
+      <tr${rowattr}>
+        <td>${nameInnerHTML}</td>
+        <td${valAattr}>${valAInnerHTML}</td>
+        <td${valBattr}>${valBInnerHTML}</td>
+      </tr>\n`);
     }
   }
-  process.stdout.write(`</tbody>\n</table>\n`);
+  process.stdout.write(`
+    </tbody>
+  </table>\n`);
+  process.stdout.write(`</head>\n</html>\n`);
 })();
 
