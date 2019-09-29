@@ -1,6 +1,6 @@
+Prerequirement: node.js and firefox (47+). Note that no Selenium WebDriver is needed.
 
-
-Create a temporary folder to use a *clean* profile.
+Create a temporary folder to use a *fresh clean* profile.
 
     % mkdir /tmp/profile_dir
 
@@ -17,4 +17,11 @@ Note: After executing fetcher.js, the firefox process is killed. So, it is neces
 Do same procedure with another version of Firefox.
 
 
-And then, we assume that we have two json file: prefall.json and prefall2.json.
+And then, we assume that we have two json file: prefall-old.json and prefall-new.json.
+
+Run surveyer.js to obtain the diff table.
+
+    % node surveyer.js prefall-old.json prefall-new.json > diff.html
+
+
+
