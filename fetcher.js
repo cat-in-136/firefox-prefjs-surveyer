@@ -33,6 +33,12 @@ const foxr = require('foxr').default;
         } catch (err){
         }
       }
+
+      let gTypeStrs = [];
+      gTypeStrs[gPrefBranch.PREF_STRING] = 'string';
+      gTypeStrs[gPrefBranch.PREF_INT] = 'integer';
+      gTypeStrs[gPrefBranch.PREF_BOOL] = 'bool';
+
       return prefs.map(entry => [entry.name, gTypeStrs[entry.type], entry.value]);
     })()`);
     //console.log(prefs);
