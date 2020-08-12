@@ -3,7 +3,14 @@ const foxr = require('foxr').default;
 (async () => {
   try {
     const browser = await foxr.connect()
-    const page = await browser.newPage()
+    let page;
+    try {
+      page = await browser.newPage()
+    } catch (e) {
+      // workaround
+      const pages = await browser.pages();
+      page = pages[0];
+    }
 
     await page.goto('about:config')
 
