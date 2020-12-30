@@ -90,6 +90,7 @@ function escape_html (string) {
   let output = "";
 
   process.stdout.write(`<!DOCTYPE html>\n<html>\n<head>
+    <title>prefdiff</title>
     <style type="text/css"><!-- /* --><![CDATA[ /* */
     #output table { border-collapse: collapse; font-size: x-small; overflow: auto; }
     #output table td { border: 1px solid #ddd; padding: 1px; vertical-align: top; word-wrap: break-word; overflow-wrap: break-word; }
@@ -165,6 +166,6 @@ function escape_html (string) {
   process.stdout.write(`
     </tbody>
   </table>\n`);
-  process.stdout.write(`</head>\n</html>\n`);
+  process.stdout.write(`</body>\n</html>\n`);
 })();
 
