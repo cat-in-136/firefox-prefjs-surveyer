@@ -1,16 +1,14 @@
-Prerequirement: node.js and firefox (47+). Note that no Selenium WebDriver is needed.
+Prerequirement: node.js and firefox.
 
-Create a temporary folder to use a *fresh clean* profile.
+Install dependency after cloning the repository to your local working copy.
 
-    % mkdir /tmp/profile_dir
-
-Run firefox in headless mode.
-
-    % /path/to/firefox -profile /tmp/profile_dir -marionette -headless
+    % git clone https://github.com/cat-in-136/firefox-prefjs-surveyer.git
+    % cd firefox-prefjs-surveyer
+    % npm i
 
 Execute fetcher.js to obtain all default prefs.
 
-    % node fetcher.js > prefall.json
+    % node fetcher.js /path/to/firefox > prefall.json
 
 Note: After executing fetcher.js, the firefox process is killed. So, it is necessary to run firefox in headless mode again to retry fetcher.js.
 
