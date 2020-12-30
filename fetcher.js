@@ -1,21 +1,31 @@
-const foxr = require('foxr').default;
+const { Builder, Capabilities } = require('selenium-webdriver');
+require('geckodriver');
+
+const executablePath = process.argv[2];
+if (!executablePath) {
+  console.error(`Usage: ${process.argv[0]} ${process.argv[1]} path_to_firefox`);
+  process.exit(1);
+} else {
+  console.error(`Firefox Executable Path: ${executablePath}`);
+}
 
 (async () => {
+  const firefoxCapabilities = Capabilities.firefox();
+  firefoxCapabilities.set('moz:firefoxOptions', {
+    binary: executablePath,
+    args: ['-headless'],
+    log: { level: 'trace' },
+  });
+
+  const driver = await new Builder()
+    .forBrowser('firefox')
+    .withCapabilities(firefoxCapabilities)
+    .build();
   try {
-    const browser = await foxr.connect()
-    let page;
-    try {
-      page = await browser.newPage()
-    } catch (e) {
-      // workaround
-      const pages = await browser.pages();
-      page = pages[0];
-    }
+    await driver.get('about:config');
 
-    await page.goto('about:config')
-
-    //await page.evaluate('ShowPrefs()');
-    const prefs = await page.evaluate(`(function(){
+    //await driver.executeScript('ShowPrefs()');
+    const prefs = await driver.executeScript(function() {
       const { Services } = ChromeUtils.import("resource://gre/modules/Services.jsm");
       const gPrefBranch = Services.prefs;
       const defaultBranch = gPrefBranch.getDefaultBranch("");
@@ -47,12 +57,13 @@ const foxr = require('foxr').default;
       gTypeStrs[gPrefBranch.PREF_BOOL] = 'bool';
 
       return prefs.map(entry => [entry.name, gTypeStrs[entry.type], entry.value]);
-    })()`);
+    });
     //console.log(prefs);
     process.stdout.write(JSON.stringify(prefs));
     //process.stdout.write("\n");
-    await browser.close()
   } catch (error) {
     console.error(error)
+  } finally {
+    await driver.quit();
   }
 })();
