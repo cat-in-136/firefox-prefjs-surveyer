@@ -10,16 +10,10 @@ Execute fetcher.js to obtain all default prefs.
 
     % node fetcher.js /path/to/firefox > prefall.json
 
-Note: After executing fetcher.js, the firefox process is killed. So, it is necessary to run firefox in headless mode again to retry fetcher.js.
-
 Do same procedure with another version of Firefox.
-
 
 And then, we assume that we have two json file: prefall-old.json and prefall-new.json.
 
 Run surveyer.js to obtain the diff table.
 
     % node surveyer.js prefall-old.json prefall-new.json > diff.html
-
-
-
