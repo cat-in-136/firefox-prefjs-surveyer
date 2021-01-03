@@ -1,4 +1,6 @@
-const { Builder, Capabilities } = require('selenium-webdriver');
+const { Builder } = require('selenium-webdriver');
+const firefox = require('selenium-webdriver/firefox');
+
 require('geckodriver');
 
 const executablePath = process.argv[2];
@@ -10,16 +12,13 @@ if (!executablePath) {
 }
 
 (async () => {
-  const firefoxCapabilities = Capabilities.firefox();
-  firefoxCapabilities.set('moz:firefoxOptions', {
-    binary: executablePath,
-    args: ['-headless'],
-    log: { level: 'trace' },
-  });
+  const options = new firefox.Options()
+    .headless()
+    .setBinary(executablePath);
 
   const driver = await new Builder()
     .forBrowser('firefox')
-    .withCapabilities(firefoxCapabilities)
+    .setFirefoxOptions(options)
     .build();
   try {
     await driver.get('about:config');
