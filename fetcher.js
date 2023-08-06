@@ -25,7 +25,7 @@ if (!executablePath) {
 
     //await driver.executeScript('ShowPrefs()');
     const prefs = await driver.executeScript(function() {
-      const { Services } = ChromeUtils.import("resource://gre/modules/Services.jsm");
+      const Services = globalThis.Services || ChromeUtils.import("resource://gre/modules/Services.jsm").Services;
       const gPrefBranch = Services.prefs;
       const defaultBranch = gPrefBranch.getDefaultBranch("");
       let prefs = [];
