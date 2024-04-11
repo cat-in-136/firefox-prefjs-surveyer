@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/cat-in-136/firefox-prefjs-surveyer#readme",
   "dependencies": {
-    "geckodriver": "^3",
+    "geckodriver": "^4",
     "selenium-webdriver": "^4"
   }
 }
