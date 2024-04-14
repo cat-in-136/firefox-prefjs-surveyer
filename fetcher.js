@@ -1,4 +1,4 @@
-const { Builder } = require('selenium-webdriver');
+const { Builder, Browser } = require('selenium-webdriver');
 const firefox = require('selenium-webdriver/firefox');
 
 require('geckodriver');
@@ -13,11 +13,11 @@ if (!executablePath) {
 
 (async () => {
   const options = new firefox.Options()
-    .headless()
+    .addArguments("-headless")
     .setBinary(executablePath);
 
   const driver = await new Builder()
-    .forBrowser('firefox')
+    .forBrowser(Browser.FIREFOX)
     .setFirefoxOptions(options)
     .build();
   try {
