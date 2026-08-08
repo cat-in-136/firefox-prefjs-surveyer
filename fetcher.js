@@ -1,3 +1,6 @@
+// MOZ_REMOTE_ALLOW_SYSTEM_ACCESS must be set before initializing/launching Selenium
+process.env.MOZ_REMOTE_ALLOW_SYSTEM_ACCESS = '1';
+
 const { Builder, Browser } = require('selenium-webdriver');
 const firefox = require('selenium-webdriver/firefox');
 
@@ -14,7 +17,7 @@ if (!executablePath) {
 (async () => {
   const options = new firefox.Options()
     .addArguments("-headless")
-    .addArguments("-remote-allow-system-access") // allow_system_access is required to run script on parent process browsing contexts since firefox 151
+    .enableBidi()
     .setBinary(executablePath);
 
   const driver = await new Builder()
